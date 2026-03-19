@@ -11,3 +11,13 @@ class FakeEmbeddingClient:
                     type("obj", (), {"embedding": vector})
                 ]
             })
+    
+
+class FakeEmbeddingService:
+    def search(self, query, k=5):
+        return ["coffee expense", "grocery shopping"]
+
+
+class FakeLLMService:
+    def generate(self, query, chunks):
+        return f"Answer based on {len(chunks)} chunks"

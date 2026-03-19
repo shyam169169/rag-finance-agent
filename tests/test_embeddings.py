@@ -1,5 +1,5 @@
 import pytest
-from client.fake_embedding_client import FakeEmbeddingClient
+from client.fake_services import FakeEmbeddingClient
 from app.services.embedding import EmbeddingService
 
 def test_embeddings():
