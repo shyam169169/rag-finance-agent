@@ -31,7 +31,7 @@ def test_embeddings():
     chunks = ["coffee", "tea", "grocery shopping"]
     service.add_chunks(chunks)
 
-    results = service.search("board", k = 1)
+    results = service.search("board", k = 1, threshold=.01)
     assert results == []
 
 def test_get_embeddings():
