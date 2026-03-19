@@ -3,7 +3,7 @@ from typing import List
 
 REQUIRED_COLUMNS = ["date", "category", "amount"]
 
-async def process_csv(ifile):
+async def process_csv(file):
     return None
 
 def create_chunks_from_df(df: pd.DataFrame) -> List[str]:
