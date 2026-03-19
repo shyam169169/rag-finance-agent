@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-finance-copilot"
+version = "0.1.0"
+description = "An open-source, explainable financial RAG system"
+authors = [{name = "Shyam Venkat"}]
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pandas",
+    "openai",
+    "faiss-cpu",
+    "python-multipart"
+]
