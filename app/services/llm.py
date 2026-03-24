@@ -1,3 +1,4 @@
+from app.services.metrics import metrics_service
 
 
 class LLMService:
@@ -25,6 +26,13 @@ class LLMService:
             messages=[{"role": "user", "content": prompt}],
             stream=True
         )
+
+        usage = stream_response.usage
+        metrics_service.log({
+            "input_tokens":usage.prompt_tokens,
+            "output_tokens":usage.completetion_tokens,
+            "total_tokens":usage.total_tokens
+        })
 
         for chunk in stream_response:
             if chunk.choices[0].delta.content:
