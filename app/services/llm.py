@@ -20,9 +20,12 @@ class LLMService:
         Give actionable insights.
         """
 
-        response = self.client.chat.completions.create(
+        stream_response = self.client.chat.completions.create(
             model="gpt-4.1-mini",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[{"role": "user", "content": prompt}],
+            stream=True
         )
 
-        return response.choices[0].message.content
+        for chunk in stream_response:
+            if chunk.choices[0].delta.content:
+                yield chunk.choices[0].delta.content

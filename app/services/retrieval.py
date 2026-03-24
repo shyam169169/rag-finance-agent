@@ -17,11 +17,11 @@ class RetrievalService:
         #step 1: Retrieve relevant chunks
         chunks = self.embedding_service.search(question)
 
-        #step 2: Generate the response using LLM
-        response = self.llm_service.generate(question, chunks)
+        #step 2: Generate the response using LLM and stream the response
+        return self.llm_service.generate(question, chunks)
 
-        return {
-            "question": question,
-            "chunks": chunks,
-            "response": response
-        }
+        # return {
+        #     "question": question,
+        #     "chunks": chunks,
+        #     "response": response
+        # }
