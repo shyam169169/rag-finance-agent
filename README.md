@@ -103,7 +103,6 @@ uvicorn app.main:app --reload
 | -------------------- | -------------------------------------- |
 | `POST /upload`       | Upload CSV and build vector index      |
 | `POST /query`        | RAG-based response with cost + latency |
-| `POST /query-stream` | Streaming response                     |
 | `GET /metrics`       | View token + latency logs              |
 
 ---
