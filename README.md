@@ -9,7 +9,6 @@ An end-to-end AI backend system that analyzes personal financial data using **Re
 * 📥 CSV ingestion and preprocessing pipeline
 * 🔍 Semantic search using vector embeddings
 * 🧠 RAG-based financial insights using LLMs
-* ⚡ Streaming + non-streaming API support
 * 💰 Token-level cost tracking
 * ⏱ Latency instrumentation (retrieval + LLM)
 * 🚦 Rate limiting for API safety
@@ -46,7 +45,7 @@ An end-to-end AI backend system that analyzes personal financial data using **Re
  │     LLM      │
  └──────┬───────┘
         ↓
-   Streaming Response
+    Response
 ```
 
 ---
@@ -137,29 +136,6 @@ uvicorn app.main:app --reload
 * [ ] Observability dashboard
 * [ ] Multi-user support
 * [ ] Caching layer
-
----
-
-## 💡 Why This Project?
-
-Most AI demos ignore:
-
-* cost
-* latency
-* production concerns
-
-This project focuses on:
-
-> Building **real-world AI backend systems**, not just LLM wrappers
-
----
-
-## 🧾 Resume Highlights
-
-* Built an end-to-end **RAG-based AI backend system**
-* Implemented **semantic search using FAISS**
-* Designed **token-level cost tracking and latency observability**
-* Developed **modular, testable architecture using dependency injection**
 
 ---
 
