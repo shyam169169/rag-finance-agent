@@ -111,16 +111,22 @@ uvicorn app.main:app --reload
 
 ```json
 {
-  "answer": "You are spending heavily on shopping...",
-  "usage": {
-    "total_tokens": 1050,
-    "cost": 0.00023
-  },
-  "latency": {
-    "retrieval_time": 0.01,
-    "llm_time": 1.2,
-    "total_time": 1.21
-  }
+    "question": "\"How much did I spend on home\"",
+    "retrieved_chunks": [
+        "[TRANSACTION]\nDate: 02/02/2025\nCategory: beverage\nAmount: 10$\nDescription: ",
+        "[TRANSACTION]\nDate: 02/02/2025\nCategory: home\nAmount: 1000$\nDescription: "
+    ],
+    "answer": "You spent $1000 on home-related expenses on 02/02/2025.\n\nActionable insight: Since the home expense is significantly higher than your beverage expense, it might be helpful to review your home-related purchases to ensure they align with your budget and financial goals. Consider tracking larger expenses like these to better manage your monthly spending.",
+    "usage": {
+        "input_tokens": 105,
+        "output_tokens": 68,
+        "total_tokens": 173
+    },
+    "latency": {
+        "retrieval_time": 1.621246337890625e-05,
+        "llm_time": 1.909255027770996,
+        "total_time": 1.9092731475830078
+    }
 }
 ```
 
