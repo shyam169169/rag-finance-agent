@@ -1,0 +1,4 @@
+[
+    "[TRANSACTION]\nDate: 02/02/2025\nCategory: beverage\nAmount: 10$\nDescription: ",
+    "[TRANSACTION]\nDate: 02/02/2025\nCategory: home\nAmount: 1000$\nDescription: "
+]

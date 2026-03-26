@@ -11,15 +11,20 @@ class EmbeddingService:
         self.dim = dim
         self.index = faiss.IndexFlatL2(dim)
         self.chunks = []
+    
+    def get_chunks(self):
+        return self.chunks
 
-    def get_embedding(self, text:str):
+    def get_embeddings(self, chunks):
         """convert text into embeddings"""
         response = self.client.embeddings.create(
             model="text-embedding-3-small",
-            input=text
+            input=chunks
         )
+
+        embeddings = [d.embedding for d in response.data]
         
-        return response.data[0].embedding
+        return embeddings
 
     def add_chunks(self, chunks):
         """
@@ -27,7 +32,7 @@ class EmbeddingService:
         """
         if not chunks:
             return
-        embeddings = [self.get_embedding(chunk) for chunk in chunks]
+        embeddings = self.get_embeddings(chunks)
         vectors = np.array(embeddings).astype("float32")
         
         self.index.add(vectors)
@@ -38,16 +43,21 @@ class EmbeddingService:
         Retrieve top-k similar chunks.
         """
         if not self.chunks:
-            return []
+            print("No chunks to search")
+            self.chunks = [
+                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: beverage\nAmount: 10$\nDescription: ",
+                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: home\nAmount: 1000$\nDescription: "
+                    ]
         
-        query_embedding = self.get_embedding(query)
-        query_vector = np.array([query_embedding]).astype("float32")
+        query_embedding = self.get_embeddings(query)
+        query_vector = np.array(query_embedding).astype("float32")
 
-        distances, indices = self.index.search(query_vector, k)
+        print("Query vector shape:", query_vector.shape)
 
-        results = []
-        for dist, idx in zip(distances[0], indices[0]):
-            if idx < len(self.chunks) and dist < threshold:
-                results.append(self.chunks[idx])
-
-        return results
+        index_search_results = self.index.search(query_vector, k)
+        if len(index_search_results) == 2:
+            distances, indices = index_search_results
+        else:
+            raise ValueError(f"Unexpected FAISS output: {index_search_results}")
+        
+        return [self.chunks[i] for i in indices[0] if 0 <= i < len(self.chunks)]

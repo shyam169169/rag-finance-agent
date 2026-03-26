@@ -7,4 +7,7 @@ class MetricsService:
     def log(self, data):
         self.logs.append(data)
 
+    def get_all_logs(self):
+        return self.logs
+
 metrics_service = MetricsService()

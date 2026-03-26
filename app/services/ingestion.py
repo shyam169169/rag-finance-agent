@@ -1,10 +1,13 @@
 import pandas as pd
 from typing import List
+from fastapi import UploadFile
 
 REQUIRED_COLUMNS = ["date", "category", "amount"]
 
-async def process_csv(file):
-    return None
+async def process_csv(file: UploadFile) -> List[str]:
+    df = pd.read_csv(file.file)
+    chunks = create_chunks_from_df(df)
+    return chunks
 
 def create_chunks_from_df(df: pd.DataFrame) -> List[str]:
     """
@@ -44,6 +47,8 @@ def validate_columns(df: pd.DataFrame) -> None:
     """
     Ensure required columns exist.
     """
+
+    print(f"df columns = {df.columns}")
     missing = [col for col in REQUIRED_COLUMNS if col not in df.columns]
     if missing:
         raise ValueError(f"Missing required columns: {missing}")

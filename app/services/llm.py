@@ -1,9 +1,11 @@
-from app.services.metrics import metrics_service
+
+from app.services.metrics import MetricsService
 
 
 class LLMService:
-    def __init__(self, client):
+    def __init__(self, client, metrics_service: MetricsService):
         self.client = client
+        self.metrics_service = metrics_service
 
     def generate(self, query, chunks):
         context = "\n".join(chunks)
@@ -21,19 +23,29 @@ class LLMService:
         Give actionable insights.
         """
 
-        stream_response = self.client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model="gpt-4.1-mini",
-            messages=[{"role": "user", "content": prompt}],
-            stream=True
+            messages=[{"role": "user", "content": prompt}]
         )
 
-        usage = stream_response.usage
-        metrics_service.log({
-            "input_tokens":usage.prompt_tokens,
-            "output_tokens":usage.completetion_tokens,
-            "total_tokens":usage.total_tokens
-        })
+        print(response)
 
-        for chunk in stream_response:
-            if chunk.choices[0].delta.content:
-                yield chunk.choices[0].delta.content
+        print (response.choices[0].message.content)
+
+        usage = response.usage
+
+        metrics = {
+            "input_tokens":usage.prompt_tokens,
+            "output_tokens":usage.completion_tokens,
+            "total_tokens":usage.total_tokens
+        }
+
+        print (metrics)
+
+        self.metrics_service.log(metrics)
+
+        return {
+            "answer": response.choices[0].message.content,
+            "metrics": metrics
+        }
+        
