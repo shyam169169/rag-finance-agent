@@ -1,36 +1,58 @@
-# 💰 RAG-finanance-agent (RAG + Agent System)
+# 💰 RAG-finanance-agent (RAG + Observability)
+An end-to-end AI backend system that analyzes personal financial data using Retrieval-Augmented Generation (RAG) and provides actionable insights — with full cost, latency, and usage observability.
 
-An AI-powered backend system that analyzes personal financial data using **Retrieval-Augmented Generation (RAG)** and provides actionable insights.
 
 ---
 
 ## 🚀 Features (Planned)
 
-* 📥 CSV ingestion and processing
-* 🔍 Semantic search using embeddings
-* 🧠 RAG-based financial insights
-* ⚡ Streaming responses
-* 💰 Token cost tracking
-* 🚦 Rate limiting
-* 📊 Observability dashboard
+📥 CSV ingestion and preprocessing pipeline
+🔍 Semantic search using vector embeddings
+🧠 RAG-based financial insights using LLMs
+💰 Token-level cost tracking
+⏱ Latency instrumentation (retrieval + LLM)
+🚦 Rate limiting for API safety
+📊 Metrics logging and observability
 
 ---
 
 ## 🏗️ Architecture
-
-```text
-CSV → Chunking → Embeddings → Vector DB
-                               ↓
-User Query → Retrieval → LLM → Response
-```
+g
+                ┌──────────────┐
+                │   Client     │
+                └──────┬───────┘
+                       ↓
+                ┌──────────────┐
+                │   FastAPI    │
+                └──────┬───────┘
+                       ↓
+               ┌────────────────┐
+               │  Orchestrator  │
+               └──────┬─────────┘
+                      ↓
+        ┌─────────────┴─────────────┐
+        ↓                           ↓
+ ┌──────────────┐           ┌──────────────┐
+ │  Retrieval   │           │    Tools     │
+ └──────┬───────┘           └──────────────┘
+        ↓
+ ┌──────────────┐
+ │ Vector Store │ (FAISS)
+ └──────┬───────┘
+        ↓
+ ┌──────────────┐
+ │     LLM      │
+ └──────┬───────┘
+        ↓
+    Response
 
 ---
 
-## 🧪 Current Status
-
-✅ Ingestion pipeline (CSV → chunks)
-✅ Unit tests for ingestion
-🚧 Embedding module (in progress)
+## 🧠 System Design Highlights
+Modular architecture with ingestion, embedding, retrieval, and LLM layers
+Dependency injection for testability and flexibility
+Separation of indexing vs query pipelines
+Observability built-in for cost and performance monitoring
 
 ---
 
@@ -44,12 +66,15 @@ User Query → Retrieval → LLM → Response
 ---
 
 ## ▶️ How to Run
-
-```bash
+1. Clone repo
+git clone https://github.com/<your-username>/ai-finance-copilot.git
+cd ai-finance-copilot
+2. Install dependencies
 pip install -r requirements.txt
+3. Set API key
+export OPENAI_API_KEY="your-api-key"
+4. Run server
 uvicorn app.main:app --reload
-```
-
 ---
 
 ## 🧪 Run Tests
