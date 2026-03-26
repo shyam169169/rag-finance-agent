@@ -25,12 +25,11 @@ def get_chunks():
     return embedding_service.get_chunks()
 
 @router.post("/query")
-def query_stream( 
-                       retrieval:RetrievalService=Depends(get_retrieval_service)):
+def query_stream(question: str, retrieval:RetrievalService=Depends(get_retrieval_service)):
    ## if not rate_limiter.allow("current_user_id"):
     ##    return {"error": "Rate limit exceeded"}
-    print("How much did i spend for home")
-    response = retrieval.query("How much did i spend for home")
+    print(question)
+    response = retrieval.query(question)
     return response
 
 @router.get("/metrics")

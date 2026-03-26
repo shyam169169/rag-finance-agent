@@ -44,10 +44,7 @@ class EmbeddingService:
         """
         if not self.chunks:
             print("No chunks to search")
-            self.chunks = [
-                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: beverage\nAmount: 10$\nDescription: ",
-                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: home\nAmount: 1000$\nDescription: "
-                    ]
+            return []
         
         query_embedding = self.get_embeddings(query)
         query_vector = np.array(query_embedding).astype("float32")

@@ -19,29 +19,31 @@ class RetrievalService:
         Query → Retrieve → Generate
         """
         #step 1: Retrieve relevant chunks
-        #chunks = self.embedding_service.search(question)
-        chunks = [
-                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: beverage\nAmount: 10$\nDescription: ",
-                        "[TRANSACTION]\nDate: 02/02/2025\nCategory: home\nAmount: 1000$\nDescription: "
-                    ]
-        print (f"chunks retrieved from Embedding - {chunks}")
-        print (question)
+        chunks = self.embedding_service.search(question)
+ 
         retrieval_time = time.time() - start
 
         llm_start = time.time()
         #step 2: Generate the response using LLM and stream the response
         response = self.llm_service.generate(question, chunks)
-
         llm_time = time.time() - llm_start
+
+        total_time = time.time() - start
+
         metrics_service.log({
             "retrieval_time": retrieval_time,
-            "llim_time": llm_time
+            "llim_time": llm_time,
+            "total_time": total_time
         })
-        
-        return response
 
-        # return {
-        #     "question": question,
-        #     "chunks": chunks,
-        #     "response": response
-        # }
+        return {
+            "question": question,
+            "retrieved_chunks": chunks,
+            "answer": response["answer"],
+            "usage": response["metrics"],
+            "latency": {
+                "retrieval_time": retrieval_time,
+                "llm_time": llm_time,
+                "total_time": total_time
+            }
+        }
