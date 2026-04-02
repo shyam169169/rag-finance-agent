@@ -1,4 +1,4 @@
-# 💰 AI Financial Copilot (RAG + Observability)
+# 💰 AI Financial Copilot(a.k.a rag finanace agent) (RAG + Observability)
 
 An end-to-end AI backend system that analyzes personal financial data using **Retrieval-Augmented Generation (RAG)** and provides actionable insights — with full **cost, latency, and usage observability**.
 
@@ -73,8 +73,7 @@ An end-to-end AI backend system that analyzes personal financial data using **Re
 ### 1. Clone repo
 
 ```bash
-git clone https://github.com/<your-username>/ai-finance-copilot.git
-cd ai-finance-copilot
+Clone this repo
 ```
 
 ### 2. Install dependencies
