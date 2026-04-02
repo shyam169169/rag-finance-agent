@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "retrieval_accuracy": 1.0,
+    "answer_accuracy": 1.0,
+    "total_samples": 1
+  },
+  "details": [
+    {
+      "question": "How much did I spend on coffee?",
+      "retrieval_hit": true,
+      "answer_hit": true
+    }
+  ]
+}

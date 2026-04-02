@@ -1,0 +1,6 @@
+[
+  {
+    "question": "How much did I spend on coffee?",
+    "expected_keywords": ["beverage"]
+  }
+] 

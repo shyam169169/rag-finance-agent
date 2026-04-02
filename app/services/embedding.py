@@ -1,5 +1,7 @@
 import faiss
 import numpy as np
+import os
+import json
 
 class EmbeddingService:
     def __init__(self, embedding_client, dim=1536):
@@ -11,7 +13,26 @@ class EmbeddingService:
         self.dim = dim
         self.index = faiss.IndexFlatL2(dim)
         self.chunks = []
+
+        self.load_index()
+        self.load_chunks()
+
+    def save_index(self, path="data/index.faiss"):
+        faiss.write_index(self.index, path)
     
+    def load_index(self, path="data/index.faiss"):
+        if os.path.exists(path):
+            self.index = faiss.read_index(path)
+    
+    def save_chunks(self, path="data/chunks.json"):
+        with open(path, "w") as f:
+            json.dump(self.chunks, f)
+
+    def load_chunks(self, path="data/chunks.json"):
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                self.chunks = json.load(f)
+            
     def get_chunks(self):
         return self.chunks
 
@@ -37,6 +58,8 @@ class EmbeddingService:
         
         self.index.add(vectors)
         self.chunks.extend(chunks)
+        self.save_index()
+        self.save_chunks()
     
     def search(self, query: str, k: int = 5, threshold: float = 0.5):
         """
