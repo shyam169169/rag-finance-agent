@@ -1,6 +1,14 @@
 [
   {
-    "question": "How much did I spend on coffee?",
-    "expected_keywords": ["beverage"]
+    "question": "How much did I spend on groceries?",
+    "expected_keywords": ["groceries"]
+  },
+  {
+    "question": "Where am I overspending?",
+    "expected_keywords": ["shopping", "dining"]
+  },
+  {
+    "question": "What are my biggest expenses?",
+    "expected_keywords": ["malls"]
   }
-] 
+]

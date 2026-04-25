@@ -1,14 +1,41 @@
 {
   "summary": {
-    "retrieval_accuracy": 1.0,
-    "answer_accuracy": 1.0,
-    "total_samples": 1
+    "retrieval_accuracy": 0.0,
+    "answer_accuracy": 0.3333333333333333,
+    "total_samples": 3,
+    "latency": [
+      {
+        "retrieval_time": 1.3255400657653809,
+        "llm_time": 1.3258068561553955,
+        "total_time": 2.6513490676879883
+      },
+      {
+        "retrieval_time": 0.508087158203125,
+        "llm_time": 1.74263596534729,
+        "total_time": 2.250725030899048
+      },
+      {
+        "retrieval_time": 0.1788170337677002,
+        "llm_time": 1.354166030883789,
+        "total_time": 1.5329840183258057
+      }
+    ]
   },
   "details": [
     {
-      "question": "How much did I spend on coffee?",
-      "retrieval_hit": true,
+      "question": "How much did I spend on groceries?",
+      "retrieval_hit": false,
       "answer_hit": true
+    },
+    {
+      "question": "Where am I overspending?",
+      "retrieval_hit": false,
+      "answer_hit": false
+    },
+    {
+      "question": "What are my biggest expenses?",
+      "retrieval_hit": false,
+      "answer_hit": false
     }
   ]
 }

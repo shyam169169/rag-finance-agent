@@ -6,6 +6,7 @@ def evlauate():
         dataset = json.load(f)
 
     results = []
+    latency = []
 
     for item in dataset:
         question = item["question"]
@@ -16,27 +17,32 @@ def evlauate():
         answer = response["answer"]
         retrieved_chunks = response["retrieved_chunks"]
 
-        #answer_hit
-        answer_hit = any(keyword in answer.lower() for keyword in expected_keywords)
-
         #retrieval_hit
         retrieval_hit = any(
             any(keyword in chunk.lower() for keyword in expected_keywords)
             for chunk in retrieved_chunks
         )
+
+        #answer_hit
+        answer_hit = any(keyword in answer.lower() for keyword in expected_keywords)
+
+        
         results.append({
             "question": question,
             "retrieval_hit":retrieval_hit,
-            "answer_hit":answer_hit
+            "answer_hit":answer_hit,
+            
         })
+        latency.append(response["latency"])
     
-    retrieval_accuracy = sum( result["retrieval_hit"] for result in results)/ len(results)
-    answer_accuracy = sum( result["answer_hit"] for result in results)/ len(results)
+    retrieval_accuracy = sum( result["retrieval_hit"] == True for result in results)/ len(results)
+    answer_accuracy = sum( result["answer_hit"] == True for result in results)/ len(results)
 
     summary = {
         "retrieval_accuracy": retrieval_accuracy,
         "answer_accuracy": answer_accuracy,
-        "total_samples": len(results)
+        "total_samples": len(results),
+        "latency": latency
     }
 
     print("=== EVAL RESULTS ===")

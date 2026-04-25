@@ -1,8 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, Depends
 from fastapi.responses import StreamingResponse
-from app.services.ingestion import process_csv
-from app.services.retrieval import RetrievalService
-from app.services.rate_limiter import RateLimiter
+from app.services.core.ingestion import process_csv
+from app.services.core.retrieval import RetrievalService
+from app.services.optimize.rate_limiter import RateLimiter
 from app.services.metrics import metrics_service
 from app.api.dependencies import embedding_service, get_retrieval_service
 
@@ -25,11 +25,11 @@ def get_chunks():
     return embedding_service.get_chunks()
 
 @router.post("/query")
-def query_stream(question: str, retrieval:RetrievalService=Depends(get_retrieval_service)):
+def query_stream(question: str, retrievalService:RetrievalService=Depends(get_retrieval_service)):
    ## if not rate_limiter.allow("current_user_id"):
     ##    return {"error": "Rate limit exceeded"}
     print(question)
-    response = retrieval.query(question)
+    response = retrievalService.query(question)
     return response
 
 @router.get("/metrics")

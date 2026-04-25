@@ -1,7 +1,8 @@
 import time
-from app.services.metrics import metrics_service
-from app.services.embedding import EmbeddingService
-from app.services.llm import LLMService
+from app.services.metrics.metrics import metrics_service
+from app.services.persistance.embedding import EmbeddingService
+from app.services.core.llm import LLMService
+
 class RetrievalService:
     def __init__(self, embedding_service: EmbeddingService, llm_service: LLMService):
 

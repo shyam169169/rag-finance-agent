@@ -1,5 +1,6 @@
 
-from app.services.metrics import MetricsService
+from app.services.metrics.metrics import MetricsService
+from app.utils.cost import calculate_cost
 
 
 class LLMService:
@@ -37,7 +38,8 @@ class LLMService:
         metrics = {
             "input_tokens":usage.prompt_tokens,
             "output_tokens":usage.completion_tokens,
-            "total_tokens":usage.total_tokens
+            "total_tokens":usage.total_tokens,
+            "cost": calculate_cost(usage.prompt_tokens, usage.completion_tokens)
         }
 
         print (metrics)
